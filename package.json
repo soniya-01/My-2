@@ -1,0 +1,12 @@
+{
+  "name": "wa-session-scanner",
+  "version": "1.0.0",
+  "dependencies": {
+    "@whiskeysockets/baileys": "latest",
+    "pino": "latest",
+    "cors": "latest"
+  },
+  "devDependencies": {
+    "@netlify/plugin-functions-core": "latest"
+  }
+}
