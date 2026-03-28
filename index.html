@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WA Session Scanner</title>
+    <style>
+        body { background: #050505; color: #ff007f; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background: #111; padding: 40px; border-radius: 20px; border: 1px solid #ff007f; box-shadow: 0 0 30px rgba(255, 0, 127, 0.3); text-align: center; width: 320px; }
+        h2 { text-transform: uppercase; letter-spacing: 3px; }
+        input { width: 100%; padding: 12px; margin: 20px 0; border: 1px solid #ff007f; background: #000; color: #fff; text-align: center; border-radius: 8px; box-sizing: border-box; }
+        button { background: #ff007f; color: #fff; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button:hover { background: #ff00a2; box-shadow: 0 0 15px #ff007f; }
+        #result { margin-top: 25px; font-size: 28px; font-weight: bold; color: #00ffff; text-shadow: 0 0 10px #00ffff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>WA SCANNER</h2>
+        <input type="text" id="num" placeholder="947xxxxxxxx">
+        <button onclick="getCode()">GET PAIRING CODE</button>
+        <div id="result"></div>
+        <p id="status" style="font-size: 12px; margin-top: 10px; color: #666;"></p>
+    </div>
+
+    <script>
+        async function getCode() {
+            const number = document.getElementById('num').value;
+            const result = document.getElementById('result');
+            const status = document.getElementById('status');
+
+            if(!number) return alert("අංකය ඇතුළත් කරන්න!");
+
+            result.innerText = "WAIT...";
+            status.innerText = "සර්වර් එක ක්‍රියාත්මක වෙනවා...";
+
+            try {
+                // Netlify Function එකට කතා කිරීම
+                const res = await fetch(`/.netlify/functions/get-code?number=${number}`);
+                const data = await res.json();
+                
+                if(data.code) {
+                    result.innerText = data.code;
+                    status.innerText = "ඔබේ WhatsApp එකේ මෙම Code එක ඇතුළත් කරන්න.";
+                } else {
+                    result.innerText = "ERROR";
+                    status.innerText = "නැවත උත්සාහ කරන්න.";
+                }
+            } catch (err) {
+                result.innerText = "FAIL";
+                status.innerText = "Server Error!";
+            }
+        }
+    </script>
+</body>
+</html>
