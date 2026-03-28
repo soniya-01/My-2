@@ -5,8 +5,5 @@
     "@whiskeysockets/baileys": "latest",
     "pino": "latest",
     "cors": "latest"
-  },
-  "devDependencies": {
-    "@netlify/plugin-functions-core": "latest"
   }
 }
